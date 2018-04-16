@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      # Upgrade AWS CLI to the latest version
+      - pip install --upgrade awscli
+  pre_build:
+    commands:
+      - echo Test started on `date`
+      - mvn clean compile test
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn package
+  post_build:
+    commands:
+      - echo Entering post_build phase...
+      - echo Build completed on `date`
+artifacts:
+  type: zip
+  files:
+    - 'appspec.yml'
+    - 'scripts/start_server'
+    - 'scripts/install_dependencies'
+    - 'target/ROOT.war'
